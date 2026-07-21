@@ -6,9 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Certificate Download Portal</title>
+    <title>Git & GitHub Workshop Certificate Portal</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -17,58 +20,76 @@
 
 <body>
 
-    <header>
+    <div class="overlay"></div>
 
-        <img src="assets/logo.png" class="logo">
+    <main class="portal">
 
-        <h1>Lachoo Memorial College of Science and Technology</h1>
-        <h2>Computer Science Department</h2>
+        <div class="card">
 
-        <h2>Git & GitHub Workshop</h2>
+            <img src="assets/logo.png"
+                 alt="College Logo"
+                 class="logo">
 
-        <p>Certificate Download Portal</p>
+            <h1>Lachoo Memorial College of Science and Technology</h1>
 
-    </header>
+            <h2>Git & GitHub Workshop</h2>
 
-    <div class="container">
+            <p class="subtitle">
+                Certificate Download & Verification Portal
+            </p>
 
-        <div class="search-box">
+            <div class="search-area">
 
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Enter Student Name">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by Name, Roll Number or Certificate ID">
 
-            <button onclick="searchCertificate()">
+                <button onclick="searchCertificate()">
+                    Search
+                </button>
 
-                Search
+            </div>
 
-            </button>
+            <div id="result">
+
+                <h3>Welcome 👋</h3>
+
+                <p>
+
+                    Enter your Name, Roll Number or Certificate ID
+                    to verify and download your certificate.
+
+                </p>
+
+            </div>
 
         </div>
 
-        <div id="result">
-
-            <h3>No certificate selected.</h3>
-
-            <p>Search using your name</p>
-
-        </div>
-
-    </div>
+    </main>
+ <!-- Footer -->
 
     <footer>
 
-        © 2026 Lachoo Memorial College of Science and Technology| Git & GitHub Workshop
+        <p>
+            © 2026 XYZ College. All Rights Reserved.
+        </p>
+
+        <p class="footer-subtext">
+            Git & GitHub Workshop | Certificate Portal
+        </p>
 
     </footer>
-    
-    <!-- SheetJS Library -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    
-    <!-- JavaScript -->
-    <script src="script.js"></script>
 
+
+    <!-- SheetJS Library -->
+    <!-- Required if we read .xlsx Excel files directly -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
+    </script>
+
+<script src="script.js"></script>
 
 </body>
 
