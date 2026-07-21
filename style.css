@@ -223,31 +223,33 @@ h2{
 
 }
 /* Footer */
-
 footer {
     position: fixed;
-    bottom: 0;
     left: 0;
+    bottom: 0;
 
     width: 100%;
 
-    text-align: center;
-
     padding: 12px 20px;
 
+    text-align: center;
+
     color: rgba(255,255,255,0.85);
+    background: rgba(0,0,0,0.15);
+
+    backdrop-filter: blur(8px);
 
     font-size: 13px;
 
-    z-index: 2;
+    z-index: 1000;
 }
 
 .footer-subtext {
-    margin-top: 3px;
+    margin-top: 4px;
     font-size: 11px;
-    opacity: 0.7;
+    opacity: 0.8;
 }
-}
+
 /* Certificate Search Result */
 
 .certificate-result {
