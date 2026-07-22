@@ -66,12 +66,12 @@ body {
 }
 
 .logo{
-    width:280px;
-    max-width:90%;
+    width:420px;
+    max-width:95%;
     height:auto;
-    margin-bottom:15px;
+    display:block;
+    margin:0 auto 15px;
 }
-
 h1{
 
     font-size:34px;
