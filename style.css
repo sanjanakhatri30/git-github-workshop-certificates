@@ -66,11 +66,10 @@ body {
 }
 
 .logo{
-
-    width:120px;
-
-    margin-bottom:20px;
-
+    width:280px;
+    max-width:90%;
+    height:auto;
+    margin-bottom:15px;
 }
 
 h1{
@@ -193,9 +192,9 @@ h2{
 }
 
 .logo{
-
-    width:90px;
-
+    width:180px;
+    max-width:80%;
+    height:auto;
 }
 }
 /* Footer */
