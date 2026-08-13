@@ -64,16 +64,22 @@ async function loadStudentData() {
                 // Create PDF filename
                 // ------------------------------------------
 
-                let certificateFileName =
-                    name + ".pdf";
+               let certificateFileName = name + ".pdf";
 
 
-                // Handle duplicate names
-                if (usedFileNames[certificateFileName]) {
-
-                    certificateFileName =
-                        name + "_" + sno + ".pdf";
-
+                // Special handling for duplicate Farhan Khan
+                if (name.toLowerCase() === "farhan khan") {
+                
+                    if (course.toLowerCase().includes("iii")) {
+                
+                        certificateFileName = "Farhan Khan_BCA_III.pdf";
+                
+                    } else if (course.toLowerCase().includes("v")) {
+                
+                        certificateFileName = "Farhan Khan.pdf";
+                
+                    }
+                
                 }
 
                 usedFileNames[certificateFileName] = true;
