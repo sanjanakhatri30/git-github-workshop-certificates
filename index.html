@@ -1,96 +1,87 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Git & GitHub Workshop Certificate Portal</title>
+<title>Git & GitHub Workshop Certificate Portal</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+```
 
 </head>
 
 <body>
 
-    <div class="overlay"></div>
+```
+<div class="overlay"></div>
 
-    <main class="portal">
+<main class="portal">
 
-        <div class="card">
+    <div class="card">
 
-            <img src="assets/logo.png"
-                 alt="College Logo"
-                 class="logo">
+        <img src="assets/logo.png"
+             alt="College Logo"
+             class="logo">
 
-            <h1>Lachoo Memorial College of Science and Technology</h1>
-            <h2>Faculty of Computer Science </h2>
+        <h1>Lachoo Memorial College of Science and Technology</h1>
 
-            <h2>Git & GitHub Workshop</h2>
+        <h2>Faculty of Computer Science</h2>
 
-            <p class="subtitle">
-                Certificate Download & Verification Portal
-            </p>
+        <h2>Git & GitHub Workshop</h2>
 
-            <div class="search-area">
+        <p class="subtitle">
+            Certificate Download & Verification Portal
+        </p>
 
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search by Name, Roll Number or Certificate ID">
+        <div class="search-area">
 
-                <button onclick="searchCertificate()">
-                    Search
-                </button>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by Name or Roll Number">
 
-            </div>
-
-            <div id="result">
-
-                <h3>Welcome 👋</h3>
-
-                <p>
-
-                    Enter your Name, Roll Number or Certificate ID
-                    to verify and download your certificate.
-
-                </p>
-
-            </div>
+            <button onclick="searchCertificate()">
+                Search
+            </button>
 
         </div>
 
-    </main>
- <!-- Footer -->
+        <div id="result">
 
-    <footer>
+            <h3>Welcome 👋</h3>
 
-        <p>
-            © 2026 Lachoo Memorial College of Science and Technology. All Rights Reserved.
-        </p>
+            <p>
+                Enter your Name or Roll Number
+                to verify and download your certificate.
+            </p>
 
-        <p class="footer-subtext">
-            Git & GitHub Workshop | Certificate Portal
-        </p>
+        </div>
 
-    </footer>
+    </div>
+
+</main>
 
 
-    <!-- SheetJS Library -->
-    <!-- Required if we read .xlsx Excel files directly -->
+<!-- SheetJS Library -->
+<!-- Required for reading the Excel file -->
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
-    </script>
+<script
+    src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
+</script>
 
 <script src="script.js"></script>
+```
 
 </body>
 
