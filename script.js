@@ -1,36 +1,135 @@
 // ======================================================
-// TEMPORARY STUDENT DATA
-// Later, this will be loaded from your Excel/CSV file.
+// LOAD ACTUAL STUDENT DATA FROM EXCEL
 // ======================================================
 
-const students = [
-    {
-        sno: 1,
-        rollNumber: "BCA001",
-        course: "BCA",
-        name: "Rahul Verma",
-        certificateId: "GGW2026-001",
-        certificateFile: "certificates/GGW2026-001.pdf"
-    },
+let students = [];
 
-    {
-        sno: 2,
-        rollNumber: "MCA002",
-        course: "MCA",
-        name: "Sanjana Khatri",
-        certificateId: "GGW2026-002",
-        certificateFile: "certificates/GGW2026-002.pdf"
-    },
 
-    {
-        sno: 3,
-        rollNumber: "BCA003",
-        course: "BCA",
-        name: "Aditi Sharma",
-        certificateId: "GGW2026-003",
-        certificateFile: "certificates/GGW2026-003.pdf"
+// ======================================================
+// LOAD EXCEL FILE
+// ======================================================
+
+async function loadStudentData() {
+
+    try {
+
+        const response = await fetch("Attendance_Git_GitHub.xlsx");
+
+        if (!response.ok) {
+            throw new Error("Excel file could not be loaded.");
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+
+        const workbook = XLSX.read(arrayBuffer, {
+            type: "array"
+        });
+
+        // Use Sheet2 because the actual participant data
+        // is stored there
+        const worksheet = workbook.Sheets["Sheet2"];
+
+        if (!worksheet) {
+            throw new Error("Sheet2 was not found in the Excel file.");
+        }
+
+        const data = XLSX.utils.sheet_to_json(worksheet, {
+            defval: ""
+        });
+
+
+        // --------------------------------------------------
+        // Create student records
+        // --------------------------------------------------
+
+        const usedFileNames = {};
+
+        students = data
+            .filter(row => row["Sno"])
+            .map(row => {
+
+                const sno = Number(row["Sno"]);
+
+                const rollNumber =
+                    String(row["Roll Number  "] || "").trim();
+
+                const course =
+                    String(row["Course  "] || "").trim();
+
+                const name =
+                    String(row["Participant's Full Name "] || "").trim();
+
+
+                // ------------------------------------------
+                // Create PDF filename
+                // ------------------------------------------
+
+                let certificateFileName =
+                    name + ".pdf";
+
+
+                // Handle duplicate names
+                if (usedFileNames[certificateFileName]) {
+
+                    certificateFileName =
+                        name + "_" + sno + ".pdf";
+
+                }
+
+                usedFileNames[certificateFileName] = true;
+
+
+                return {
+
+                    sno: sno,
+
+                    rollNumber: rollNumber,
+
+                    course: course,
+
+                    name: name,
+
+                    certificateFile:
+                        "certificates/" +
+                        certificateFileName
+
+                };
+
+            });
+
+
+        console.log(
+            "Student records loaded:",
+            students.length
+        );
+
     }
-];
+
+    catch (error) {
+
+        console.error(
+            "Error loading student data:",
+            error
+        );
+
+        document.getElementById("result").innerHTML = `
+
+            <div class="not-found">
+
+                <h3>⚠️ Unable to Load Certificate Data</h3>
+
+                <p>
+                    The certificate database could not be loaded.
+                    Please try again later.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
 
 
 // ======================================================
@@ -39,65 +138,75 @@ const students = [
 
 function searchCertificate() {
 
-    const searchInput = document.getElementById("searchInput");
-    const result = document.getElementById("result");
+    const searchInput =
+        document.getElementById("searchInput");
 
-    const keyword = searchInput.value
-        .trim()
-        .toLowerCase();
+    const result =
+        document.getElementById("result");
+
+    const keyword =
+        searchInput.value
+            .trim()
+            .toLowerCase();
 
 
+    // --------------------------------------------------
     // Check if search box is empty
+    // --------------------------------------------------
 
     if (keyword === "") {
 
         result.innerHTML = `
+
             <div class="message-box">
 
                 <h3>Enter Search Details</h3>
 
                 <p>
-                    Please enter your Name, Roll Number
-                    or Certificate ID.
+                    Please enter your Name or Roll Number.
                 </p>
 
             </div>
+
         `;
 
         return;
+
     }
 
 
+    // --------------------------------------------------
     // Search student
+    // --------------------------------------------------
 
     const student = students.find(student => {
 
-        const name = student.name.toLowerCase();
+        const name =
+            student.name.toLowerCase();
 
         const rollNumber =
             student.rollNumber.toLowerCase();
 
-        const certificateId =
-            student.certificateId.toLowerCase();
 
         return (
 
             name.includes(keyword) ||
 
-            rollNumber === keyword ||
-
-            certificateId === keyword
+            rollNumber === keyword
 
         );
 
     });
 
 
-    // If certificate is not found
+    // --------------------------------------------------
+    // Certificate not found
+    // --------------------------------------------------
 
     if (!student) {
 
         result.innerHTML = `
+
             <div class="not-found">
 
                 <h3>❌ Certificate Not Found</h3>
@@ -108,21 +217,25 @@ function searchCertificate() {
                 </p>
 
                 <p>
-                    Please check your Name,
-                    Roll Number or Certificate ID
-                    and try again.
+                    Please check the student's
+                    Name or Roll Number and try again.
                 </p>
 
             </div>
+
         `;
 
         return;
+
     }
 
 
-    // If certificate is found
+    // --------------------------------------------------
+    // Certificate found
+    // --------------------------------------------------
 
     displayCertificate(student);
+
 }
 
 
@@ -132,21 +245,28 @@ function searchCertificate() {
 
 function displayCertificate(student) {
 
-    const result = document.getElementById("result");
+    const result =
+        document.getElementById("result");
+
 
     result.innerHTML = `
 
         <div class="certificate-result">
 
             <div class="verified-badge">
+
                 ✓ Verified Certificate
+
             </div>
+
 
             <h2>
                 ${student.name}
             </h2>
 
+
             <div class="student-details">
+
 
                 <div class="detail-row">
 
@@ -177,19 +297,6 @@ function displayCertificate(student) {
                 <div class="detail-row">
 
                     <span class="label">
-                        Certificate ID
-                    </span>
-
-                    <span>
-                        ${student.certificateId}
-                    </span>
-
-                </div>
-
-
-                <div class="detail-row">
-
-                    <span class="label">
                         Workshop
                     </span>
 
@@ -199,6 +306,20 @@ function displayCertificate(student) {
 
                 </div>
 
+
+                <div class="detail-row">
+
+                    <span class="label">
+                        Date
+                    </span>
+
+                    <span>
+                        18 July, 2026
+                    </span>
+
+                </div>
+
+
             </div>
 
 
@@ -206,6 +327,7 @@ function displayCertificate(student) {
                 href="${student.certificateFile}"
                 class="download-btn"
                 target="_blank"
+                rel="noopener noreferrer"
             >
 
                 Download Certificate
@@ -215,6 +337,7 @@ function displayCertificate(student) {
         </div>
 
     `;
+
 }
 
 
@@ -224,15 +347,18 @@ function displayCertificate(student) {
 
 document
     .getElementById("searchInput")
-    .addEventListener("keypress", function(event) {
+    .addEventListener(
+        "keypress",
+        function(event) {
 
-        if (event.key === "Enter") {
+            if (event.key === "Enter") {
 
-            searchCertificate();
+                searchCertificate();
+
+            }
 
         }
-
-    });
+    );
 
 
 // ======================================================
@@ -241,22 +367,31 @@ document
 
 document
     .getElementById("searchInput")
-    .addEventListener("input", function() {
+    .addEventListener(
+        "input",
+        function() {
 
-        if (this.value.trim() === "") {
+            if (this.value.trim() === "") {
 
-            document.getElementById("result").innerHTML = `
+                document.getElementById("result").innerHTML = `
 
-                <h3>Welcome 👋</h3>
+                    <h3>Welcome 👋</h3>
 
-                <p>
-                    Enter your Name, Roll Number or
-                    Certificate ID to verify and
-                    download your certificate.
-                </p>
+                    <p>
+                        Enter your Name or Roll Number
+                        to verify and download your certificate.
+                    </p>
 
-            `;
+                `;
+
+            }
 
         }
+    );
 
-    });
+
+// ======================================================
+// LOAD DATA WHEN PAGE OPENS
+// ======================================================
+
+loadStudentData();
