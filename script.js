@@ -150,9 +150,7 @@ function searchCertificate() {
             .toLowerCase();
 
 
-    // --------------------------------------------------
     // Check if search box is empty
-    // --------------------------------------------------
 
     if (keyword === "") {
 
@@ -175,11 +173,8 @@ function searchCertificate() {
     }
 
 
-    // --------------------------------------------------
-    // Search student
-    // --------------------------------------------------
-
-    const student = students.find(student => {
+    // Find ALL matching students
+    const matches = students.filter(student => {
 
         const name =
             student.name.toLowerCase();
@@ -189,21 +184,16 @@ function searchCertificate() {
 
 
         return (
-
             name.includes(keyword) ||
-
             rollNumber === keyword
-
         );
 
     });
 
 
-    // --------------------------------------------------
-    // Certificate not found
-    // --------------------------------------------------
+    // No certificate found
 
-    if (!student) {
+    if (matches.length === 0) {
 
         result.innerHTML = `
 
@@ -230,14 +220,112 @@ function searchCertificate() {
     }
 
 
-    // --------------------------------------------------
-    // Certificate found
-    // --------------------------------------------------
+    // Display all matching certificates
 
-    displayCertificate(student);
+    if (matches.length === 1) {
+
+        displayCertificate(matches[0]);
+
+        return;
+
+    }
+
+
+    // Multiple students found
+
+    result.innerHTML = `
+
+        <div class="multiple-results">
+
+            <h3>✓ Multiple Certificates Found</h3>
+
+            <p>
+                More than one student matches this name.
+                Please select the correct certificate.
+            </p>
+
+            ${matches.map(student => `
+
+                <div class="certificate-result">
+
+                    <div class="verified-badge">
+                        ✓ Verified Certificate
+                    </div>
+
+                    <h2>
+                        ${student.name}
+                    </h2>
+
+                    <div class="student-details">
+
+                        <div class="detail-row">
+
+                            <span class="label">
+                                Roll Number
+                            </span>
+
+                            <span>
+                                ${student.rollNumber}
+                            </span>
+
+                        </div>
+
+                        <div class="detail-row">
+
+                            <span class="label">
+                                Course
+                            </span>
+
+                            <span>
+                                ${student.course}
+                            </span>
+
+                        </div>
+
+                        <div class="detail-row">
+
+                            <span class="label">
+                                Workshop
+                            </span>
+
+                            <span>
+                                Git & GitHub Workshop
+                            </span>
+
+                        </div>
+
+                        <div class="detail-row">
+
+                            <span class="label">
+                                Date
+                            </span>
+
+                            <span>
+                                18 July, 2026
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="${student.certificateFile}"
+                        class="download-btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Download Certificate
+                    </a>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+    `;
 
 }
-
 
 // ======================================================
 // DISPLAY CERTIFICATE DETAILS
