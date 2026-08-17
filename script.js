@@ -314,14 +314,7 @@ function searchCertificate() {
 
                     </div>
 
-                    // <a
-                    //     href="${student.certificateFile}"
-                    //     class="download-btn"
-                    //     target="_blank"
-                    //     rel="noopener noreferrer"
-                    // >
-                    //     Download Certificate
-                    // </a>
+                   
                     <a
                         href="${student.certificateFile}"
                         class="download-btn"
@@ -424,16 +417,7 @@ function displayCertificate(student) {
             </div>
 
 
-            // <a
-            //     href="${student.certificateFile}"
-            //     class="download-btn"
-            //     target="_blank"
-            //     rel="noopener noreferrer"
-            // >
-
-            //     Download Certificate
-
-            // </a>
+           
             <a
                 href="${student.certificateFile}"
                 class="download-btn"
