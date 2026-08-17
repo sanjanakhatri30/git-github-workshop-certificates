@@ -314,11 +314,18 @@ function searchCertificate() {
 
                     </div>
 
+                    // <a
+                    //     href="${student.certificateFile}"
+                    //     class="download-btn"
+                    //     target="_blank"
+                    //     rel="noopener noreferrer"
+                    // >
+                    //     Download Certificate
+                    // </a>
                     <a
                         href="${student.certificateFile}"
                         class="download-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        onclick="downloadCertificate(event, '${student.certificateFile}', '${student.name}')"
                     >
                         Download Certificate
                     </a>
@@ -417,17 +424,23 @@ function displayCertificate(student) {
             </div>
 
 
+            // <a
+            //     href="${student.certificateFile}"
+            //     class="download-btn"
+            //     target="_blank"
+            //     rel="noopener noreferrer"
+            // >
+
+            //     Download Certificate
+
+            // </a>
             <a
                 href="${student.certificateFile}"
                 class="download-btn"
-                target="_blank"
-                rel="noopener noreferrer"
+                onclick="downloadCertificate(event, '${student.certificateFile}', '${student.name}')"
             >
-
                 Download Certificate
-
             </a>
-
         </div>
 
     `;
@@ -482,6 +495,37 @@ document
 
         }
     );
+
+
+async function downloadCertificate(event, filePath, studentName) {
+    event.preventDefault();
+
+    try {
+        const response = await fetch(filePath);
+
+        if (!response.ok) {
+            throw new Error("Certificate could not be downloaded.");
+        }
+
+        const blob = await response.blob();
+
+        const url = window.URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${studentName} - Git & GitHub Workshop Certificate.pdf`;
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.error("Download error:", error);
+        alert("Unable to download the certificate. Please try again.");
+    }
+}
 
 
 // ======================================================
